@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.get("/")
 def root(): # path operation function 
-    return {"Hello": "to my api abiiiir"}
+    return {"Hello": "to fast api "}
 
 @app.get("/posts")
 def get_posts():
