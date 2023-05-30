@@ -11,7 +11,7 @@ def root(): # path operation function
 
 @app.get("/posts")
 def get_posts():
-    return {"data":"this is the first post"}
+    return {"data":"this is a post for testing"}
 
 @app.post("/createposts")
 def create_post(payload: dict = Body(...)):
