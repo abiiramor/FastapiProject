@@ -14,11 +14,16 @@ class Post(BaseModel):
     #default nan 
     rating: Optional[int] = None
 
-#create variable to save post into array
+#create variable to save postsme into array
 my_posts = [{"title":"title of post 1", "content":"content of post 1", "id":1},
 {"title":"favorite drink", "content":"coffee", "id":3}]
+def find_post(id):
+    for p in my_posts:
+        if p["id"] == id:
+            return p
 
 
+            
 #requset Get method url :"/ " 
 
 @app.get("/")
@@ -36,3 +41,11 @@ def create_post(post:Post):
     my_posts.append(post_dict)
     return{"data" : post_dict}
 
+#retrive one 
+@app.get("/posts/{id}")
+ # id : int is validation to put int id 
+def get_post(id: int):
+    #any time we have path parameter  always is return in str type
+    post= find_post(int(id))
+    print(post)
+    return{"post details": post}
