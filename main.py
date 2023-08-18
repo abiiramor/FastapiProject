@@ -16,16 +16,26 @@ class Post(BaseModel):
 
 #create variable to save postsme into array
 my_posts = [{"title":"title of post 1", "content":"content of post 1", "id":1},
-{"title":"favorite drink", "content":"coffee", "id":3}]
+{"title":"favorite drink 2", "content":"coffee", "id":2},
+{"title":"favorite drink", "content":"coffee", "id":3},
+{"title":"favorite drink", "content":"coffee", "id":4}]
+
+
 def find_post(id):
     for p in my_posts:
         if p["id"] == id:
             return p
 
 
+def find_index_post(id):
+    for i , p in enumerate(my_posts):
+        if p['id'] == id:
+            return i
+      
+
+
             
 #requset Get method url :"/ " 
-
 @app.get("/")
 def root(): # path operation function 
     return {"Hello abir ": "fast api project"}
@@ -52,8 +62,21 @@ def get_post(id: int , response : Response):
     if not post:
         raise HTTPException (status_code = status.HTTP_404_NOT_FOUND ,
                               detail= f'post with id {id} is not found')
-        #response.status_code = status.HTTP_404_NOT_FOUND
-        #return{'message': f'post with id {id} is not found'}
+
     return{"post details": post}
 
 
+@app.delete("/posts/{id}", status_code= status.HTTP_204_NO_CONTENT)
+def delete_post(id : int):
+    #delete post
+    #find the index in the array that has required id
+    #my_posts.pop(index)
+    index = find_index_post(id)
+    
+    if index == None :
+        raise HTTPException(status_code= status.HTTP_404_NOT_FOUND,
+                            detail=f"post with id : {id} does not exist")
+
+    
+    my_posts.pop(index)
+    return Response(status_code= status.HTTP_204_NO_CONTENT)
